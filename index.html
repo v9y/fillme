@@ -23,7 +23,7 @@ body {
 }
 
 textarea {
-  font-family: "open sans", sans-serif;";
+  font-family: "open sans", sans-serif;
   resize: none;
   display:  block;
   margin-left: auto;
@@ -75,6 +75,7 @@ table {
 #keyboard {
   font-family: 'Anek Devanagari';
   text-align: center;
+  user-select: none;
   -webkit-user-select:none;
   font-size: 1.2em;
 }
@@ -465,7 +466,7 @@ details {
 </table>
 
 <div id="share-area" style="display: none;">
-  <a href="#" onclick="CopyToClipboard('result-text'); return false;">Copy the text below</a> to share your scorecard!<br/>
+  <a href="#" onclick="CopyToClipboard('result-text');">Copy the text below</a> to share your scorecard!<br/>
   <div id="share"></div>
   The next Fillme will be released in <span id="countdown"></span>.
 </div>
