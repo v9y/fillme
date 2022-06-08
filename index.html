@@ -242,10 +242,13 @@ details {
     }
     document.getElementById('grid').appendChild(tr);
     rows.push(row);
-  
     render_rows();
   }
-  
+  // Remove row if it has incorrect entry
+  function remove_invalid_row() {
+    const grid = document.getElementById('grid');
+    grid.removeChild(grid.lastElementChild);
+  }
   
   function score_row(row) {
     var guess = '';
@@ -255,6 +258,7 @@ details {
    // log_to_sqlite(guess, rows.length);
     if (wl.indexOf(guess) == -1) {
       for (var i = 0; i < row.length; i++) row[i].className = 'invalid';
+      remove_invalid_row();
       add_row();
       return;
     }
