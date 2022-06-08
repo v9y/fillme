@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fillme: फ़िल्मी वर्डल</title>
+<title>FillMe: फ़िल्मी वर्डल</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Anek+Devanagari&family=Open+Sans&display=swap');
@@ -320,7 +320,7 @@ details {
       'okay': '🟧 ',
       'invalid': '⬛️ '
     }
-    var out = "\<p id=\"result-text\" class=\"language-css\"\>My Fillme scorecard on " + todays_utc_date + ":\<br\>\<br\>";
+    var out = "\<p id=\"result-text\" class=\"language-css\"\>My FillMe scorecard on " + todays_utc_date + ":\<br\>\<br\>";
     for (var i = 0; i < rows.length; i++) {
       for (var j = 0; j < rows[i].length; j++) {
         out += tags[rows[i][j].className];
@@ -442,7 +442,7 @@ details {
   </script>
 
 <header>
-<h1>Fillme: बस फ़िल्मों के नाम!</h1>
+<h1>FillMe: बस फ़िल्मों के नाम!</h1>
 </header>
 
 <details close id="instructions" name="How to play">
@@ -468,7 +468,7 @@ details {
 <div id="share-area" style="display: none;">
   <a href="#" onclick="CopyToClipboard('result-text');">Copy the text below</a> to share your scorecard!<br/>
   <div id="share"></div>
-  The next Fillme will be released in <span id="countdown"></span>.
+  The next FillMe will be released in <span id="countdown"></span>.
 </div>
 
 <div id="keyboard">
@@ -476,7 +476,7 @@ details {
 
 <footer><i>फ़िल्मी</i> is inspired by <a
 href="https://www.powerlanguage.co.uk/wordle/">Wordle</a> and borrows most of the code from <a href="https://kach.github.io/shabdle/">Shabdle</a>. The <a href="https://github.com/kach/shabdle">source
-code</a> for <i>फ़िल्मी</i> or <i>Fillme</i> is licensed under GPLv2.</footer>
+code</a> for <i>फ़िल्मी</i> or <i>FillMe</i> is licensed under GPLv2.</footer>
 
 <script>
   function CopyToClipboard(id)
