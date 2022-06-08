@@ -60,9 +60,10 @@ td.okay {
   border: none;
 }
 td.invalid {
-  background: black !important;
+  display: none;
+  /* background: black !important;
   color: white;
-  border: none;
+  border: none; */
 }
 table {
   font-size: 1.5em;
@@ -322,7 +323,7 @@ details {
       'good': '🟩 ',
       'bad': '🟥 ',
       'okay': '🟧 ',
-      'invalid': '⬛️ '
+      'invalid': ''
     }
     var out = "\<p id=\"result-text\" class=\"language-css\"\>My FillMe scorecard on " + todays_utc_date + ":\<br\>\<br\>";
     for (var i = 0; i < rows.length; i++) {
