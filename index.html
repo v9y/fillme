@@ -199,11 +199,11 @@ details {
     var c_end = 0x0939 + 1;
     var k = 0;
     for (var i = 0; i < c_end - c_fst; i++) {
-      if ([0x090d, 0x090e, 0x0911, 0x0912, 0x0929, 0x0931, 0x0933, 0x0934].indexOf(c_fst + i) !== -1) continue;
+      if ([0x090C, 0x090d, 0x090e, 0x0911, 0x0912, 0x0929, 0x0931, 0x0933, 0x0934].indexOf(c_fst + i) !== -1) continue;
       k++;
       if (
-        k == 7 || k == 13 ||
-        k > 13 && k < 42 && (k - 13) % 5 == 0 || k == 42
+        k == 7 || k == 12 ||
+        k > 12 && k < 42 && (k - 12) % 5 == 0 || k == 41
       ) keyboard.appendChild(document.createElement('br'));
   
       var key = document.createElement('span');
@@ -397,9 +397,10 @@ details {
       '2022-6-10': 'निशान',
       '2022-6-11': 'दाता',
       '2022-6-12': 'अरमान',
-      '2022-6-13': 'अमन',
+      '2022-6-13': 'दहेज',
+      '2022-6-14': 'अज़हर'
     };
-    //todays_utc_date = '2022-6-10';
+    todays_utc_date = '2022-6-14';
   
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://v9y.github.io/fillme/films.txt');
