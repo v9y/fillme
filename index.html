@@ -34,6 +34,12 @@ textarea {
   letter-spacing: .1em;
 }
 
+h1 {
+  text-align: center;
+  line-height: .8em;
+  padding-top: 0.5em;
+}
+
 td {
   width: 2em;
   height: 2em;
@@ -150,7 +156,6 @@ details {
 
 .language-css {
   font-family: 'Anek Devanagari';
-    font-size: 1.1em;
     color: #5a7c4a;
     background: #e1e9dd;
     padding: 0.5em 1em;
@@ -199,11 +204,11 @@ details {
     var c_end = 0x0939 + 1;
     var k = 0;
     for (var i = 0; i < c_end - c_fst; i++) {
-      if ([0x090C, 0x090d, 0x090e, 0x0911, 0x0912, 0x0929, 0x0931, 0x0933, 0x0934].indexOf(c_fst + i) !== -1) continue;
+      if ([0x090C, 0x090d, 0x090e, 0x0912, 0x0929, 0x0931, 0x0933, 0x0934].indexOf(c_fst + i) !== -1) continue;
       k++;
       if (
-        k == 7 || k == 12 ||
-        k > 12 && k < 42 && (k - 12) % 5 == 0 || k == 41
+        k == 7 || k == 13 ||
+        k > 13 && k < 42 && (k - 13) % 5 == 0 || k == 42
       ) keyboard.appendChild(document.createElement('br'));
   
       var key = document.createElement('span');
@@ -317,7 +322,6 @@ details {
     }
   }
   
-  
   function make_share() {
     var tags = {
       'good': '🟩 ',
@@ -325,14 +329,16 @@ details {
       'okay': '🟧 ',
       'invalid': ''
     }
-    var out = "\<p id=\"result-text\" class=\"language-css\"\>My FillMe scorecard on " + todays_utc_date + ":\<br\>\<br\>";
-    for (var i = 0; i < rows.length; i++) {
-      for (var j = 0; j < rows[i].length; j++) {
-        out += tags[rows[i][j].className];
-      }
-      out += '\<br\>';
-    }
-    out += '\<br\>https://giitaayan.com/fillme/ \<\/p\>';
+    var out = "\<p id=\"result-text\" class=\"language-css\"\>FillMe " + todays_utc_date + "\<br\>\<br\>";
+    // for (var i = 0; i < rows.length; i++) {
+    //   for (var j = 0; j < rows[i].length; j++) {
+    //     out += tags[rows[i][j].className];
+    //   }
+    //   out += '\<br\>';
+    // }
+    out += '👍🏽 Solved in ' + (rows.length).toString() + ' attempts!\<br\>'
+    out += '\<br\>Play at https://giitaayan.com/fillme/ \<\/p\>';
+   
     var share = document.getElementById('share');
     share.innerHTML = out;
     //document.getElementById('tweet-link').href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(out);
@@ -400,7 +406,7 @@ details {
       '2022-6-13': 'दहेज',
       '2022-6-14': 'अज़हर'
     };
-    //todays_utc_date = '2022-6-14';
+    //todays_utc_date = '2022-6-15';
   
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://v9y.github.io/fillme/films.txt');
@@ -458,13 +464,12 @@ details {
   <p>छिपे शब्द के मिटे अक्षर खोजिए कीबोर्ड के साथ। रोज़ एक नई पहेली &mdash; छिपा शब्द रात को बदलता है। -->
 
   <p>
-  जैसा कि नाम से ज़ाहिर है, केवल हिंदी फ़िल्मों के नाम ही ठीक उत्तर होंगे.
+  जैसा कि नाम से ज़ाहिर है, केवल हिंदी फ़िल्मों के नाम ही ठीक जवाब होंगे.
   </p>
   <p>   
   🟩 ठीक अक्षर, ठीक स्थान पर<br/>
   🟥 अक्षर फ़िल्म के नाम में नहीं है<br>
   🟧 अक्षर मौजूद है, पर किसी दूसरे स्थान पर<br/>
-  ⬛️ फ़िल्म हमारी सूची में नहीं है
   </p>
 </details>
 
