@@ -171,19 +171,6 @@ details {
   var todays_utc_date = now_utc.getUTCFullYear() + '-' + (now_utc.getUTCMonth() + 1) + '-' + now_utc.getUTCDate();
   var who = localStorage.getItem('who') || (Date.now() + "-" + Math.floor(Math.random() * (1 << 24)));
   
-  // function log_to_sqlite(guess, count) {
-  //   data = {
-  //     date: todays_utc_date,
-  //     time: Date.now(),
-  //     who: who,
-  //     guess: guess,
-  //     count: count
-  //   };
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.open('GET', 'https://cors.bridged.cc/' + 'http://128.52.138.238:8081/' + encodeURIComponent(JSON.stringify(data)));
-  //   xhr.send(null);
-  // }
-  
   var AKSHAR_AADHA = 0;
   var AKSHAR_POORA = 1;
   var AKSHAR_MATRA = 2;
@@ -195,7 +182,6 @@ details {
     if (word.charCodeAt(i + 1) == 0x094d) return AKSHAR_AADHA;
     return AKSHAR_POORA;
   }
-  
   
   var key_map = {};  // maps akshars to <span> elements
   function make_keyboard() {
@@ -309,7 +295,6 @@ details {
     if (all_guessed) score_row(row);
   }
   
-  
   function render_row(row, puzzle) {
     for (var i = 0; i < puzzle.length; i++) {
       var out = '';
@@ -330,67 +315,18 @@ details {
       'invalid': ''
     }
     var out = "\<p id=\"result-text\" class=\"language-css\"\>FillMe " + todays_utc_date + "\<br\>\<br\>";
-    // for (var i = 0; i < rows.length; i++) {
-    //   for (var j = 0; j < rows[i].length; j++) {
-    //     out += tags[rows[i][j].className];
-    //   }
-    //   out += '\<br\>';
-    // }
     out += '👍🏽 Solved in ' + (rows.length).toString() + ' attempts!\<br\>'
     out += '\<br\>Play at https://giitaayan.com/fillme/ \<\/p\>';
    
     var share = document.getElementById('share');
     share.innerHTML = out;
-    //document.getElementById('tweet-link').href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(out);
-    //document.getElementById('whatsapp-link').href = "https://wa.me/?text=" + encodeURIComponent(out.replace(/\n/g, ' | '));
     document.getElementById('share-area').style.display = 'block';
-    //share.focus();
-    //share.select();
-
 
     document.getElementById('keyboard').style.display = 'none';
   
     var hours_left = 23 - new Date().getUTCHours();
     var minutes_left = 59 - new Date().getUTCMinutes();
     document.getElementById('countdown').textContent = hours_left + ' hours and ' + minutes_left + ' minutes';
-  
-  
-    // var scores_hist = {};
-    // function make_bar(n) {
-    //   if (n === rows.length || n == 6 && rows.length >= 6) {
-    //     path = "hit";
-    //   }
-    //   else {
-    //     path = "get";
-    //   }
-    //   var url = "https://api.countapi.xyz/" + path + "/shabdle-" + todays_utc_date + "-" + n;
-    //   var xhr = new XMLHttpRequest();
-    //   xhr.open("GET", url);
-    //   xhr.responseType = "json";
-    //   xhr.onloadend = function() {
-    //     if (xhr.status == 404) {
-    //       scores_hist[n] = 0;
-    //     } else {
-    //       scores_hist[n] = this.response.value;
-    //     }
-    //     if (Object.keys(scores_hist).length === 6) {
-    //       var total = 0;
-    //       for (var i = 1; i <= 6; i++) total += scores_hist[i];
-    //       for (var i = 1; i <= 6; i++) {
-    //         document.getElementById('bar-' + i + '-bar').style.width = scores_hist[i] / total * 100 + '%';
-    //         document.getElementById('bar-' + i + '-bar').textContent = (i == 6 ? '6+' : i) + ' guesses: ' + scores_hist[i] + ' players';
-    //         if (i == rows.length)
-    //           document.getElementById('bar-' + i + '-bar').style.backgroundColor = 'gray';
-    //       }
-    //     }
-    //   };
-    //   xhr.onerror = function(e) {
-    //     scores_hist[n] = 0;
-    //   };
-    //   xhr.send();
-    // }
-    // for (var n = 1; n <= 6; n++) make_bar(n);
-  
   }
   
   
@@ -458,11 +394,6 @@ details {
 </header>
 
 <details close id="instructions" name="How to play">
-  <!-- <summary>How to play / कैसे खेलें</summary>
-  <p>Use the keyboard below to guess the missing letters in the hidden word. There is a new puzzle every day: the hidden word changes overnight.
-
-  <p>छिपे शब्द के मिटे अक्षर खोजिए कीबोर्ड के साथ। रोज़ एक नई पहेली &mdash; छिपा शब्द रात को बदलता है। -->
-
   <p>
   जैसा कि नाम से ज़ाहिर है, केवल हिंदी फ़िल्मों के नाम ही ठीक जवाब होंगे.
   </p>
