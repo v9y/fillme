@@ -40,6 +40,11 @@ h1 {
   padding-top: 0.5em;
 }
 
+button {
+  font-family: "open sans", sans-serif;
+  padding: 0.5em;
+}
+
 td {
   width: 2em;
   height: 2em;
@@ -155,11 +160,12 @@ details {
 }
 
 .language-css {
-  font-family: 'Anek Devanagari';
+  font-family: 'system-ui', sans-serif;
     color: #5a7c4a;
     background: #e1e9dd;
-    padding: 0.5em 1em;
+    padding: 0.8em 1em;
     line-height: 1.1em;
+    font-size: .9em;
 }
 
 </style>
@@ -309,7 +315,11 @@ details {
   
   function make_share() {
     var out = "\<p id=\"result-text\" class=\"language-css\"\>FillMe " + todays_utc_date + "\<br\>\<br\>";
-    out += '👍🏽 Solved in ' + (rows.length).toString() + ' attempts!\<br\>'
+    if (rows.length == 1) {
+      out += "🥇 Whoa! Got lucky. Solved in first try!\<br\>";
+    } else {
+      out +=  '👍🏽 Solved in ' + (rows.length).toString() + ' attempts!\<br\>'
+    };
     out += '\<br\>Play at https://giitaayan.com/fillme/ \<\/p\>';
    
     var share = document.getElementById('share');
@@ -402,7 +412,7 @@ details {
 </table>
 
 <div id="share-area" style="display: none;">
-  <a href="#" onclick="CopyToClipboard('result-text');">Copy the text below</a> to share your scorecard!<br/>
+  <button onclick="CopyToClipboard('result-text');">Copy the text below</button>
   <div id="share"></div>
   The next FillMe will be released in <span id="countdown"></span>.
 </div>
