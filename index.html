@@ -22,18 +22,6 @@ body {
   box-sizing: border-box;
 }
 
-textarea {
-  font-family: "open sans", sans-serif;
-  resize: none;
-  display:  block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 1em;
-  border: dotted;
-  width: 60%;
-  letter-spacing: .1em;
-}
-
 h1 {
   text-align: center;
   line-height: .8em;
@@ -41,8 +29,10 @@ h1 {
 }
 
 button {
-  font-family: "open sans", sans-serif;
-  padding: 0.5em;
+  font-family: 'Anek Devanagari', sans-serif;
+  padding: 0.3em 0.5em 0.2em;
+  color: #5a7c4a;
+  font-size: 1em;
 }
 
 td {
@@ -127,9 +117,10 @@ table {
 
 #share-area {
   margin-bottom:  1em;
+  color: #999;
 }
 #countdown {
-  font-weight: bolder;
+  /* color: #333; */
 }
 
 #bars div {
@@ -147,7 +138,7 @@ h2 {
   text-align: right;
 }
 footer {
-  margin-top: 2em;
+  margin-top: 1.5em;
   font-size: 0.8em;
   background: #fee;
   padding:  0.5em 1em;
@@ -160,7 +151,7 @@ details {
 }
 
 .language-css {
-  font-family: 'system-ui', sans-serif;
+  font-family: sans-serif;
     color: #5a7c4a;
     background: #e1e9dd;
     padding: 0.8em 1em;
@@ -174,6 +165,7 @@ details {
   var rows = [];
   var puzzle = null;
   var now_utc = new Date();
+  var start_time = now_utc.getTime();
   var todays_utc_date = now_utc.getUTCFullYear() + '-' + (now_utc.getUTCMonth() + 1) + '-' + now_utc.getUTCDate();
   var who = localStorage.getItem('who') || (Date.now() + "-" + Math.floor(Math.random() * (1 << 24)));
   
@@ -285,7 +277,6 @@ details {
         }
       }
     }
-  
     if (win) make_share();
     else add_row();
   }
@@ -293,7 +284,6 @@ details {
   
   function render_rows() {
     for (var i = 0; i < rows.length; i++) render_row(rows[i], puzzle);
-  
     var row = rows[rows.length - 1];
     var all_guessed = true;
     for (var i = 0; i < row.length; i++)
@@ -314,20 +304,32 @@ details {
   }
   
   function make_share() {
-    var out = "\<p id=\"result-text\" class=\"language-css\"\>FillMe " + todays_utc_date + "\<br\>\<br\>";
-    if (rows.length == 1) {
-      out += "💯 Whoa! Solved in first try!\<br\>";
-    } else {
-      out +=  '👍🏽 Solved in ' + (rows.length).toString() + ' attempts!\<br\>'
+    var end_time = new Date().getTime();
+    var time_taken = end_time - start_time;
+    var time_taken_str = '';
+    if (time_taken < 60000) {
+      time_taken_str = parseInt(time_taken / 1000).toString() + ' seconds';
+      }
+    else if (time_taken < 3600000) {
+      time_taken_str = parseInt(time_taken / 60000).toString() + ' minutes';
+    } 
+    else {
+      time_taken_str = parseInt(time_taken / 3600000).toString() + ' hours';
     };
-    out += '\<br\>Play at https://giitaayan.com/fillme/ \<\/p\>';
+
+    var out = "\<p id=\"result-text\" class=\"language-css\"\><b>फ़िल्मी " + todays_utc_date + "</b>\<br\>\<br\>";
+    if (rows.length == 1) {
+      out += "💯 Whoa! Solved in <b>first</b> try! ";
+    } else {
+      out +=  "👍🏽 Solved in <b>" + (rows.length).toString() + "</b> attempts! "
+    };
+    out += "🕓 Time taken: <b>" + time_taken_str + "</b>\<br\>";
+    out += "\<br\>Play at https://giitaayan.com/fillme/ \<\/p\>";
    
     var share = document.getElementById('share');
     share.innerHTML = out;
     document.getElementById('share-area').style.display = 'block';
-
     document.getElementById('keyboard').style.display = 'none';
-  
     var hours_left = 23 - new Date().getUTCHours();
     var minutes_left = 59 - new Date().getUTCMinutes();
     document.getElementById('countdown').textContent = hours_left + ' hours and ' + minutes_left + ' minutes';
@@ -356,13 +358,13 @@ details {
       '2022-6-23': 'शरारत',
     };
     //todays_utc_date = '2022-6-15';
-  
+
+
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://v9y.github.io/fillme/films.txt');
     xhr.onload = function(x) {
       wl = this.responseText.split('\n');
       var word = puzzles[todays_utc_date];
-  
       puzzle = [];
   
       var row = [];
@@ -400,7 +402,10 @@ details {
     xhr.send(null);
   }, false);
   var dotted_circle = '\u25cc';
-  </script>
+
+</script>
+
+
 
 <header>
 <h1>FillMe: बस फ़िल्मों के नाम!</h1>
@@ -422,9 +427,9 @@ details {
 </table>
 
 <div id="share-area" style="display: none;">
-  <button onclick="CopyToClipboard('result-text');">Copy the text below</button>
+  <button onclick="CopyToClipboard('result-text');">Copy the results</button>
   <div id="share"></div>
-  The next FillMe will be released in <span id="countdown"></span>.
+  The next FillMe in <span id="countdown"></span>.
 </div>
 
 <div id="keyboard">
