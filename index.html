@@ -307,7 +307,7 @@ details {
     var end_time = new Date().getTime();
     var time_taken = end_time - start_time;
     var time_taken_str = '';
-    if (time_taken < 60000) {
+    if (time_taken < 120000) {
       time_taken_str = parseInt(time_taken / 1000).toString() + ' seconds';
       }
     else if (time_taken < 3600000) {
