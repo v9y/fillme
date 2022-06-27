@@ -147,7 +147,11 @@ footer {
 details {
   background: #fee;
   padding: 0.5em 1em;
-  margin-bottom: 1em;
+  margin: 1em 0;
+}
+
+details p {
+  color: #777;
 }
 
 .language-css {
@@ -167,7 +171,9 @@ details {
   var now_utc = new Date();
   var start_time = now_utc.getTime();
   var todays_utc_date = now_utc.getUTCFullYear() + '-' + (now_utc.getUTCMonth() + 1) + '-' + now_utc.getUTCDate();
+  var yesterdays_utc_date = (now_utc.getUTCFullYear() + '-' + (now_utc.getUTCMonth() + 1) + '-' + (now_utc.getUTCDate() - 1));
   var who = localStorage.getItem('who') || (Date.now() + "-" + Math.floor(Math.random() * (1 << 24)));
+  var puzzle_id = localStorage.getItem('puzzle_id') || '1';
   
   var AKSHAR_AADHA = 0;
   var AKSHAR_POORA = 1;
@@ -310,7 +316,7 @@ details {
     if (time_taken < 120000) {
       time_taken_str = parseInt(time_taken / 1000).toString() + ' seconds';
       }
-    else if (time_taken < 3600000) {
+    else if (time_taken < 7200000) {
       time_taken_str = parseInt(time_taken / 60000).toString() + ' minutes';
     } 
     else {
@@ -387,6 +393,8 @@ details {
     xhr.onload = function(x) {
       wl = this.responseText.split('\n');
       var word = puzzles[todays_utc_date];
+      var yesterdays_word = puzzles[yesterdays_utc_date];
+      document.getElementById('lastword_value').textContent = yesterdays_word;
       puzzle = [];
   
       var row = [];
@@ -433,7 +441,8 @@ details {
 <h1>FillMe: बस फ़िल्मी नाम!</h1>
 </header>
 
-<details open id="instructions" name="How to play">
+<details closed id="instructions" name="How to play">
+  <summary>कैसे खेलें</summary>
   <p>
   केवल हिंदी फ़िल्मों और कलाकारों के नाम ही ठीक जवाब होंगे.
   </p>
@@ -456,7 +465,12 @@ details {
 
 <div id="keyboard">
 </div>
-
+<details closed id="lastword" name="Last Word">
+  <summary>पिछला शब्द</summary>
+  <p>
+    कल का फ़िल्मी शब्द था - <span id="lastword_value"></span>.
+  </p>
+</details>
 <footer><i>फ़िल्मी</i> is inspired by <a
 href="https://nytimes.com/wordle">Wordle</a> and borrows most of the code from <a href="https://kach.github.io/shabdle/">Shabdle</a>. The <a href="https://github.com/kach/shabdle">source
 code</a> for <i>फ़िल्मी</i> or <i>FillMe</i> is licensed under GPLv2.</footer>
@@ -470,7 +484,7 @@ code</a> for <i>फ़िल्मी</i> or <i>FillMe</i> is licensed under GPL
   window.getSelection().addRange(r);
   document.execCommand('copy');
   window.getSelection().removeAllRanges();
-  document.getElementById('result-text').style.backgroundColor = '#eee';
+  document.getElementById('result-text').style.backgroundColor = '#ffeeee';
   }
   </script>
  <!-- Global site tag (gtag.js) - Google Analytics -->
