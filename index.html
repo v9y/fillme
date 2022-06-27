@@ -119,9 +119,6 @@ table {
   margin-bottom:  1em;
   color: #999;
 }
-#countdown {
-  /* color: #333; */
-}
 
 #bars div {
   background: lightgray;
@@ -451,14 +448,14 @@ details p {
   🟥 अक्षर नाम में नहीं है<br>
   🟧 अक्षर मौजूद है, पर किसी दूसरे स्थान पर<br/>
   </p>
-  <p>नुक़्ते या निचली बिंदी का चिह्न (़) क़, ख़, ग़, फ़, ज़, ड़, और ढ़ के लिए है.</p>
+  <p>नुक़्ते या निचली बिंदी का चिह्न (़) क़, ख़, ग़, फ़, ज़, ड़, और ढ़ के लिए होंगे.</p>
 </details>
 
 <table id="grid">
 </table>
 
 <div id="share-area" style="display: none;">
-  <button onclick="CopyToClipboard('result-text');">Copy the results</button>
+  <button id="copy-button" onclick="CopyToClipboard('result-text');">Copy the results</button>
   <div id="share"></div>
   Play next FillMe in <span id="countdown"></span>.
 </div>
@@ -468,7 +465,7 @@ details p {
 <details closed id="lastword" name="Last Word">
   <summary>पिछला शब्द</summary>
   <p>
-    कल का फ़िल्मी शब्द था - <span id="lastword_value"></span>.
+    कल का फ़िल्मी शब्द था - <span id="lastword_value"></span>
   </p>
 </details>
 <footer><i>फ़िल्मी</i> is inspired by <a
@@ -485,6 +482,7 @@ code</a> for <i>फ़िल्मी</i> or <i>FillMe</i> is licensed under GPL
   document.execCommand('copy');
   window.getSelection().removeAllRanges();
   document.getElementById('result-text').style.backgroundColor = '#ffeeee';
+  document.getElementById('copy-button').textContent = 'Copied!';
   }
   </script>
  <!-- Global site tag (gtag.js) - Google Analytics -->
