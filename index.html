@@ -196,7 +196,7 @@ a:hover.button {
 </style>
 <script>
   window.dataLayer = window.dataLayer || [];
-  </script>
+</script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -281,6 +281,7 @@ a:hover.button {
     rows.push(row);
     render_rows();
   }
+  
   // Remove row if it has incorrect entry
   function remove_invalid_row() {
     const grid = document.getElementById('grid');
@@ -330,7 +331,6 @@ a:hover.button {
     dataLayer.push({'guess': guess});
   }
   
-  
   function render_rows() {
     for (var i = 0; i < rows.length; i++) render_row(rows[i], puzzle);
     var row = rows[rows.length - 1];
@@ -356,6 +356,7 @@ a:hover.button {
     var end_time = new Date().getTime();
     var time_taken = end_time - start_time;
     var time_taken_str = '';
+    todays_clue = [];
     if (time_taken < 120000) {
       time_taken_str = parseInt(time_taken / 1000).toString() + ' seconds';
       }
@@ -366,7 +367,12 @@ a:hover.button {
       time_taken_str = parseInt(time_taken / 3600000).toString() + ' hours';
     };
 
-    var out = "\<p id=\"result-text\" class=\"language-css\"\><b>फ़िल्मी " + todays_utc_date + "</b>\<br\>\<br\>";
+    for (var i = 0; i < puzzle.length; i++) {
+      todays_clue[i] = puzzle[i].pre + dotted_circle + puzzle[i].post;
+    };
+    var clue = todays_clue.join('-');
+
+    var out = "\<p id=\"result-text\" class=\"language-css\"\><b>फ़िल्मी " + todays_utc_date + ": " + clue + "</b>\<br\>\<br\>";
     if (rows.length == 1) {
       out += "💯 Whoa! Solved in <b>first</b> try! ";
     } else {
