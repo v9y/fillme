@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+<html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
 <title>FillMe: फ़िल्मी वर्डल</title>
 
 <style>
@@ -15,7 +17,6 @@ body {
   margin-top: 0;
   padding-left: 0.5em;
   padding-right: 0.5em;
-
   font-family: 'Anek Devanagari', sans-serif;
   color: black;
   background: white;
@@ -88,18 +89,16 @@ table {
   margin: 0.1em;
   padding-top: 0.2em;
   padding-bottom: 0.1em;
-  background: hsl(0, 10%, 90%);
+  background: #e8e8e3;
   cursor: pointer;
   border-radius: 0.3em;
 }
 #keyboard span#delete {
   width: 8em;
 }
-#keyboard span:nth-child(odd) {
-  background: hsl(60, 10%, 90%);
-}
+
 #keyboard span:hover {
-  background: black;
+  background: #333;
   color: white;
 }
 #keyboard span.good {
@@ -117,7 +116,8 @@ table {
 
 #share-area {
   margin-bottom:  1em;
-  color: #999;
+  color: #666;
+  border-radius: 3px;
 }
 
 #bars div {
@@ -137,38 +137,82 @@ h2 {
 footer {
   margin-top: 1.5em;
   font-size: 0.8em;
-  background: #fee;
-  padding:  0.5em 1em;
+  background: #eeeeee85;
+  padding:  0.8em 1em;
+  border-radius: 3px;
 }
 
 details {
   background: #fee;
   padding: 0.5em 1em;
   margin: 1em 0;
+  border-radius: 3px;
+}
+
+details > summary {
+  cursor: pointer;
+  font-weight: normal;
 }
 
 details p {
-  color: #777;
+  color: #555;
+  margin-bottom: 0;
+  font-size: .95em;
+}
+
+details[open] > summary {
+  font-weight: normal;
 }
 
 .language-css {
-  font-family: sans-serif;
-    color: #5a7c4a;
+    color: #32651a;
     background: #e1e9dd;
-    padding: 0.8em 1em;
+    padding: 0.8em;
     line-height: 1.1em;
-    font-size: .9em;
+    font-size: .95em;
 }
 
+a.button {
+    font-family: system-ui,helvetica,arial,sans-serif;
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 1;
+    display: inline-block;
+    padding: .5em;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #900;
+    border-radius: 5px;
+    background-color: #900;
+    cursor: pointer;
+}
+
+a:hover.button {
+    color: #900;
+    background-color: #fff;
+    border: 1px solid #900;
+}
 </style>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  </script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NDGMLX8');</script>
+<!-- End Google Tag Manager -->
 <script>
   var wl = [];
   var rows = [];
   var puzzle = null;
   var now_utc = new Date();
+  var yday_utc = new Date(now_utc.getTime() - 24 * 60 * 60 * 1000);
   var start_time = now_utc.getTime();
   var todays_utc_date = now_utc.getUTCFullYear() + '-' + (now_utc.getUTCMonth() + 1) + '-' + now_utc.getUTCDate();
-  var yesterdays_utc_date = (now_utc.getUTCFullYear() + '-' + (now_utc.getUTCMonth() + 1) + '-' + (now_utc.getUTCDate() - 1));
+  var yesterdays_utc_date = (yday_utc.getUTCFullYear() + '-' + (yday_utc.getUTCMonth() + 1) + '-' + (yday_utc.getUTCDate()));
   var who = localStorage.getItem('who') || (Date.now() + "-" + Math.floor(Math.random() * (1 << 24)));
   var puzzle_id = localStorage.getItem('puzzle_id') || '1';
   
@@ -248,7 +292,6 @@ details p {
     for (var i = 0; i < row.length; i++) {
       guess += puzzle[i].pre + row[i].dataset.guess + puzzle[i].post;
     }
-   // log_to_sqlite(guess, rows.length);
     if (wl.indexOf(guess) == -1) {
       for (var i = 0; i < row.length; i++) row[i].className = 'invalid';
       remove_invalid_row();
@@ -266,22 +309,25 @@ details p {
     for (var i = 0; i < row.length; i++) {
       if (row[i].dataset.guess == puzzle[i].mid) {
         row[i].className = 'good';
-        key_map[row[i].dataset.guess].className = 'okay';
+        key_map[row[i].dataset.guess].className = 'good';
       } else {
         win = false;
         row[i].className = 'bad';
         if (total_count[row[i].dataset.guess] > 0) {
           row[i].className = 'okay';
           total_count[row[i].dataset.guess]--;
+          if (key_map[row[i].dataset.guess].className == '')
           key_map[row[i].dataset.guess].className = 'okay';
         }
-        if (!Object.hasOwnProperty(total_count, row[i].dataset.guess)) {
+        if (!Object.hasOwnProperty(total_count, row[i].dataset.guess) && key_map[row[i].dataset.guess].className == '') {
           key_map[row[i].dataset.guess].className = 'bad';
         }
       }
     }
     if (win) make_share();
     else add_row();
+    dataLayer.push({'event': 'attempt'});
+    dataLayer.push({'guess': guess});
   }
   
   
@@ -327,7 +373,7 @@ details p {
       out +=  "👍🏽 Solved in <b>" + (rows.length).toString() + "</b> attempts! "
     };
     out += "🕓 Time taken: <b>" + time_taken_str + "</b>\<br\>";
-    out += "\<br\>Play at https://giitaayan.com/fillme/ \<\/p\>";
+    out += "\<br\>Play at https://giitaayan.com/fillme \<\/p\>";
    
     var share = document.getElementById('share');
     share.innerHTML = out;
@@ -342,48 +388,17 @@ details p {
   window.addEventListener('load', function() {
     make_keyboard();
     var puzzles = {
-      '2022-6-7': 'दीवार',
-      '2022-6-8': 'गबन',
-      '2022-6-9': 'लगान',
-      '2022-6-10': 'निशान',
-      '2022-6-11': 'दाता',
-      '2022-6-12': 'अरमान',
-      '2022-6-13': 'मज़ाक',
-      '2022-6-14': 'सपने',
-      '2022-6-15': 'सड़क',
-      '2022-6-16': 'हादसा',
-      '2022-6-17': 'गुलज़ार',
-      '2022-6-18': 'सत्यकाम',
-      '2022-6-19': 'पड़ोसन',
-      '2022-6-20': 'लावारिस',
-      '2022-6-21': 'मधुबाला',
-      '2022-6-22': 'विजेता',
-      '2022-6-23': 'शरारत',
-      '2022-6-24': 'रणवीर',
-      '2022-6-25': 'कुंदन',
-      '2022-6-26': 'माचिस',
-      '2022-6-27': 'खेमचंद',
-      '2022-6-28': 'बसेरा',
-      '2022-6-29': 'गाइड',
-      '2022-6-30': 'नमकीन',
-      '2022-6-31': 'जुनून',
-      '2022-7-1': 'मजरूह',
-      '2022-7-2': 'देवदास',
-      '2022-7-3': 'गोलमाल',
-      '2022-7-4': 'परिंदा',
-      '2022-7-5': 'जोगन',
-      '2022-7-6': 'बिमल',
-      '2022-7-7': 'सागर',
-      '2022-7-8': 'इजाज़त',
-      '2022-7-9': 'आवारा',
-      '2022-7-10': 'चितचोर',
-      '2022-7-11': 'कथा',
-      '2022-7-12': 'रामगोपाल',
-      '2022-7-13': 'बंदिनी',
-      '2022-7-14': 'कन्यादान',
+      '2022-7-13': 'निकाह',
+      '2022-7-14': 'जंगली',
+      '2022-7-15': 'उत्सव',
+      '2022-7-16': 'कलयुग',
+      '2022-7-17': 'सोहराब',
+      '2022-7-18': 'बसंत',
+      '2022-7-19': 'मसान',
+      '2022-7-20': 'सागर',
+      '2022-7-21': 'ऋषिकेश'
     };
     //todays_utc_date = '2022-6-15';
-
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://v9y.github.io/fillme/films.txt');
@@ -423,7 +438,7 @@ details p {
           needs_new = true;
         else
           needs_new = false;
-      }
+      };
       add_row();
     };
     xhr.send(null);
@@ -431,31 +446,36 @@ details p {
   var dotted_circle = '\u25cc';
 
 </script>
+</head>
 
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDGMLX8"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
-
-<header>
+<header> 
 <h1>FillMe: बस फ़िल्मी नाम!</h1>
 </header>
 
 <details closed id="instructions" name="How to play">
   <summary>कैसे खेलें</summary>
-  <p>
-  केवल हिंदी फ़िल्मों और कलाकारों के नाम ही ठीक जवाब होंगे.
-  </p>
+  <p>आपको खाली खानों में अक्षर भरकर नाम बूझना है. केवल हिंदी फ़िल्मों (एक शब्द वाली) और कलाकारों के नाम (लोकप्रिय या पहला नाम) ही ठीक जवाब होंगे.</p>
+  <p>आप चाहे जितनी बार कोशिश कर सकते हैं. हर कोशिश के बाद खानों के बदले रंग से आप जान सकते हैं कि आपका जवाब कितना नज़दीक था.</p>
   <p>   
-  🟩 ठीक अक्षर, ठीक स्थान पर<br/>
-  🟥 अक्षर नाम में नहीं है<br>
-  🟧 अक्षर मौजूद है, पर किसी दूसरे स्थान पर<br/>
+  🟩 ठीक अक्षर, ठीक जगह पर<br/>
+  🟥 अक्षर नाम में नहीं<br>
+  🟧 अक्षर मौजूद, पर किसी और जगह<br/>
   </p>
-  <p>नुक़्ते या निचली बिंदी का चिह्न (़) क़, ख़, ग़, फ़, ज़, ड़, और ढ़ के लिए होंगे.</p>
+  <p>नुक़्ते या निचली बिंदी का चिह्न (़) क़, ख़, ग़, फ़, ज़, ड़, और ढ़ के लिए प्रयुक्त होगा.</p>
+  <p>पहेली हर रोज़ बदलती है.</p>
 </details>
 
 <table id="grid">
 </table>
 
-<div id="share-area" style="display: none;">
-  <button id="copy-button" onclick="CopyToClipboard('result-text');">Copy the results</button>
+<div id="share-area" style="display: none;"></a>
+  <a role="button" id="copy-button" onclick="CopyToClipboard('result-text');" class="button">Copy the results</a>
   <div id="share"></div>
   Play next FillMe in <span id="countdown"></span>.
 </div>
@@ -463,35 +483,29 @@ details p {
 <div id="keyboard">
 </div>
 <details closed id="lastword" name="Last Word">
-  <summary>पिछला शब्द</summary>
+  <summary>कल का फ़िल्मी नाम था</summary>
   <p>
-    कल का फ़िल्मी शब्द था - <span id="lastword_value"></span>
+    <span id="lastword_value"></span>
   </p>
 </details>
-<footer><i>फ़िल्मी</i> is inspired by <a
-href="https://nytimes.com/wordle">Wordle</a> and borrows most of the code from <a href="https://kach.github.io/shabdle/">Shabdle</a>. The <a href="https://github.com/kach/shabdle">source
-code</a> for <i>फ़िल्मी</i> or <i>FillMe</i> is licensed under GPLv2.</footer>
+<footer>'फ़िल्मी' is inspired by <a
+href="https://nytimes.com/wordle">Wordle</a> and borrows the base code from <a href="https://kach.github.io/shabdle/">Shabdle</a>. The <a href="https://github.com/kach/shabdle">source
+code</a> for 'फ़िल्मी (FillMe)' is licensed under GPLv2.</footer>
 
 <script>
-  function CopyToClipboard(id)
-  {
-  var r = document.createRange();
-  r.selectNode(document.getElementById(id));
-  window.getSelection().removeAllRanges();
-  window.getSelection().addRange(r);
-  document.execCommand('copy');
-  window.getSelection().removeAllRanges();
-  document.getElementById('result-text').style.backgroundColor = '#ffeeee';
-  document.getElementById('copy-button').textContent = 'Copied!';
+  function CopyToClipboard(id) {
+    var r = document.createRange();
+    r.selectNode(document.getElementById(id));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(r);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+    document.getElementById('result-text').style.backgroundColor = '#ffeeee';
+    document.getElementById('result-text').style.color = '#a73939';
+    document.getElementById('copy-button').style.backgroundColor = '#fff';
+    document.getElementById('copy-button').style.color = '#900';
+    document.getElementById('copy-button').textContent = 'Copied to Clipboard!';
   }
-  </script>
- <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-88211-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-88211-2');
 </script>
-
+</body>
+</html>
