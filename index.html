@@ -47,17 +47,17 @@ td[data-guess]:not([data-guess=""]) {
   background: #ddd;
 }
 td.good {
-  background: rgb(133, 166, 117) !important;
+  background: #759366 !important;
   color: white;
   border: none;
 }
 td.bad {
-  background: rgb(244, 102, 102) !important;
+  background: #f46666 !important;
   color: white;
   border: none;
 }
 td.okay {
-  background: rgb(226, 160, 39) !important;
+  background: #c18a22 !important;
   color: white;
   border: none;
 }
@@ -102,15 +102,15 @@ table {
   color: white;
 }
 #keyboard span.good {
-  background: rgb(133, 166, 117);
+  background: #759366;
   color: white;
 }
 #keyboard span.bad {
-  background: rgb(244, 102, 102);
+  background: #f46666;
   color: white;
 }
 #keyboard span.okay {
-  background: rgb(226, 160, 39);
+  background: #c18a22;
   color: white;
 }
 
@@ -293,6 +293,8 @@ a:hover.button {
     for (var i = 0; i < row.length; i++) {
       guess += puzzle[i].pre + row[i].dataset.guess + puzzle[i].post;
     }
+    dataLayer.push({'event': 'attempt'});
+    dataLayer.push({'guess': guess});
     if (wl.indexOf(guess) == -1) {
       for (var i = 0; i < row.length; i++) row[i].className = 'invalid';
       remove_invalid_row();
@@ -327,8 +329,6 @@ a:hover.button {
     }
     if (win) make_share();
     else add_row();
-    dataLayer.push({'event': 'attempt'});
-    dataLayer.push({'guess': guess});
   }
   
   function render_rows() {
