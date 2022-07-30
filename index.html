@@ -6,7 +6,7 @@
 <title>FillMe: फ़िल्मी वर्डल</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Anek+Devanagari&family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@400;700&family=Open+Sans&display=swap');
 
 body {
   width: 100%;
@@ -21,6 +21,13 @@ body {
   color: black;
   background: white;
   box-sizing: border-box;
+  animation: fadeInAnimation ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeInAnimation {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }
 
 h1 {
@@ -29,39 +36,33 @@ h1 {
   padding-top: 0.5em;
 }
 
-button {
-  font-family: 'Anek Devanagari', sans-serif;
-  padding: 0.3em 0.5em 0.2em;
-  color: #5a7c4a;
-  font-size: 1em;
-}
-
 td {
   width: 2em;
   height: 2em;
   text-align: center;
   background: white;
   border: 1px solid black;
+  transition: all .2s ease-in;
 }
 td[data-guess]:not([data-guess=""]) {
   background: #ddd;
 }
-td.good {
-  background: #759366 !important;
+.good {
+  background: #799a68 !important;
   color: white;
   border: none;
 }
-td.bad {
+.bad {
   background: #f46666 !important;
   color: white;
   border: none;
 }
-td.okay {
+.okay {
   background: #c18a22 !important;
   color: white;
   border: none;
 }
-td.invalid {
+.invalid {
   display: none;
   /* background: black !important;
   color: white;
@@ -96,13 +97,12 @@ table {
 #keyboard span#delete {
   width: 8em;
 }
-
 #keyboard span:hover {
   background: #333;
   color: white;
 }
 #keyboard span.good {
-  background: #759366;
+  background: #799a68;
   color: white;
 }
 #keyboard span.bad {
@@ -129,7 +129,7 @@ table {
 }
 
 header {
-  color: #fc4242;
+  color: #f46666;
 }
 h2 {
   text-align: right;
@@ -147,19 +147,17 @@ details {
   padding: 0.5em 1em;
   margin: 1em 0;
   border-radius: 3px;
+  font-size: .95em;
 }
-
 details > summary {
   cursor: pointer;
   font-weight: normal;
+  font-size: 1em;
 }
-
 details p {
   color: #555;
   margin-bottom: 0;
-  font-size: .95em;
 }
-
 details[open] > summary {
   font-weight: normal;
 }
@@ -174,7 +172,7 @@ details[open] > summary {
 
 a.button {
     font-family: system-ui,helvetica,arial,sans-serif;
-    font-size: 1em;
+    font-size: .9em;
     font-weight: bold;
     line-height: 1;
     display: inline-block;
@@ -186,13 +184,56 @@ a.button {
     border-radius: 5px;
     background-color: #900;
     cursor: pointer;
+    transition: all .2s ease-in;
 }
-
 a:hover.button {
     color: #900;
     background-color: #fff;
     border: 1px solid #900;
 }
+
+@keyframes nudge {  
+  0% {transform: rotate(-7deg);}
+  33% {transform: rotate(7deg);}
+  66% {transform: rotate(-7deg);}
+}
+.galat-hai {
+    animation: nudge .4s linear;
+}
+
+@keyframes flashWin {
+  0% {opacity: 1; background-color: #32651a;}
+  50% {opacity: 0;background-color: #ddd;}
+  100% {opacity: 1;background-color: #799a68;}
+}
+.jeet {
+  animation: flashWin 1s ease-in-out;
+}
+
+@keyframes chamak {
+    0%, 100% { opacity: 1;}
+    50% { opacity: .1;}         
+}
+.chamako {
+    animation: chamak 1s ease-in-out;
+}
+
+@keyframes kaanp {  
+    0%, 64%, 100%   { transform: scale(1,1)  translateY(0); }
+    10%, 50%  { transform: scale(1.1,.9) translateY(0); }
+    30%  { transform: scale(.9,1.1) translateY(-5px); }
+    57%  { transform: scale(1,1) translateY(-2px); }
+  }  
+.share-karo {
+      animation: kaanp .5s ease-in;
+      animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
+}
+
+.square {
+  height: 14px;
+  width: 14px;
+  display: inline-block;
+}  
 </style>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -288,19 +329,33 @@ a:hover.button {
     grid.removeChild(grid.lastElementChild);
   }
   
-  function score_row(row) {
+  function wait(ms) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        //console.log("wait over");
+        resolve(ms)
+      }, ms )
+    })
+  }  
+
+  async function score_row(row) {
     var guess = '';
     for (var i = 0; i < row.length; i++) {
       guess += puzzle[i].pre + row[i].dataset.guess + puzzle[i].post;
     }
     dataLayer.push({'event': 'attempt'});
     dataLayer.push({'guess': guess});
+    
     if (wl.indexOf(guess) == -1) {
-      for (var i = 0; i < row.length; i++) row[i].className = 'invalid';
+      for (var i = 0; i < row.length; i++) {
+        row[i].className = 'galat-hai';
+      }
+      await wait(2000);
       remove_invalid_row();
       add_row();
       return;
-    }
+    };
+    
     var win = true;
     var total_count = {};  // number of "unclaimed" letters
     for (var i = 0; i < puzzle.length; i++) {
@@ -327,9 +382,17 @@ a:hover.button {
         }
       }
     }
-    if (win) make_share();
+    if (win) {
+      for (var i = 0; i < row.length; i++) {
+        row[i].className = 'good jeet';
+      };
+      dataLayer.push({'event': 'jeet'});
+      make_share();
+    }
     else add_row();
   }
+
+  
   
   function render_rows() {
     for (var i = 0; i < rows.length; i++) render_row(rows[i], puzzle);
@@ -357,9 +420,12 @@ a:hover.button {
     var time_taken = end_time - start_time;
     var time_taken_str = '';
     todays_clue = [];
-    if (time_taken < 120000) {
+    if (time_taken < 60000) {
+      time_taken_str = 'Less than a minute';
+    }
+    else if (time_taken < 120000) {
       time_taken_str = parseInt(time_taken / 1000).toString() + ' seconds';
-      }
+    }
     else if (time_taken < 7200000) {
       time_taken_str = parseInt(time_taken / 60000).toString() + ' minutes';
     } 
@@ -372,7 +438,7 @@ a:hover.button {
     };
     var clue = todays_clue.join('-');
 
-    var out = "\<p id=\"result-text\" class=\"language-css\"\><b>फ़िल्मी " + todays_utc_date + ": " + clue + "</b>\<br\>\<br\>";
+    var out = "\<p id=\"result-text\" class=\"language-css\"\><b>फ़िल्मी " + todays_utc_date + " </b>\<br\>\<br\>";
     if (rows.length == 1) {
       out += "💯 Whoa! Solved in <b>first try</b>! ";
     } else {
@@ -387,28 +453,19 @@ a:hover.button {
     document.getElementById('keyboard').style.display = 'none';
     var hours_left = 23 - new Date().getUTCHours();
     var minutes_left = 59 - new Date().getUTCMinutes();
-    document.getElementById('countdown').textContent = hours_left + ' hours and ' + minutes_left + ' minutes';
+    if (minutes_left < 2) {
+      var minute_label = 'minute';
+    } else {
+      var minute_label = 'minutes';
+    };
+    document.getElementById('countdown').textContent = hours_left + ' hours and ' + minutes_left + ' ' + minute_label;
   }
   
   
   window.addEventListener('load', function() {
     make_keyboard();
     var puzzles = {
-      '2022-7-17': 'सोहराब',
-      '2022-7-18': 'बसंत',
-      '2022-7-19': 'हक़ीक़त',
-      '2022-7-20': 'मसान',
-      '2022-7-21': 'ऋषिकेश',
-      '2022-7-22': 'ग़ुलामी',
-      '2022-7-23': 'साहिर',
-      '2022-7-24': 'वहीदा',
-      '2022-7-25': 'शेरनी',
-      '2022-7-26': 'मृणाल',
-      '2022-7-27': 'सागर',
-      '2022-7-28': 'महल',
-      '2022-7-29': 'उड़ान',
-      '2022-7-30': 'क़ानून',
-      '2022-7-31': 'अनिल'
+      '2022-7-28': 'महल','2022-7-29': 'उड़ान','2022-7-30': 'क़ानून','2022-7-31': 'अनिल','2022-8-1': 'न्यूटन','2022-8-2': 'ज़ीनत','2022-8-3': 'सुजाता','2022-8-4': 'सर','2022-8-5': 'नसीब','2022-8-6': 'कोशिश','2022-8-7': 'दंगल','2022-8-8': 'महबूब','2022-8-9': 'आक्रोश','2022-8-10': 'अशोक','2022-8-11': 'अभिमान','2022-8-12': 'सुलक्षणा','2022-8-13': 'सत्या','2022-8-14': 'मासूम','2022-8-15': 'शांताराम','2022-8-16': 'मम्मो','2022-8-17': 'चेतन','2022-8-18': 'लाजवंती','2022-8-19': 'अंदाज़','2022-8-20': 'सारांश','2022-8-21': 'दिलीप','2022-8-22': 'आलिया','2022-8-23': 'घायल','2022-8-24': 'नसीर','2022-8-25': 'अनुपमा','2022-8-26': 'सदमा','2022-8-27': 'जागृति','2022-8-28': 'बलराज','2022-8-29': 'अर्जुन','2022-8-30': 'जयदेव','2022-8-31': 'अनुराधा'
     };
     //todays_utc_date = '2022-6-15';
 
@@ -474,13 +531,11 @@ a:hover.button {
   <summary>कैसे खेलें</summary>
   <p>आपको खाली खानों में अक्षर भरकर नाम बूझना है. केवल हिंदी फ़िल्मों (एक शब्द वाली) और कलाकारों के नाम (लोकप्रिय या पहला नाम) ही ठीक जवाब होंगे.</p>
   <p>आप चाहे जितनी बार कोशिश कर सकते हैं. हर कोशिश के बाद खानों के बदले रंग से आप जान सकते हैं कि आपका जवाब कितना नज़दीक था.</p>
-  <p>   
-  🟩 ठीक अक्षर, ठीक जगह पर<br/>
-  🟥 अक्षर नाम में नहीं<br>
-  🟫 अक्षर मौजूद, पर किसी और जगह<br/>
-  </p>
-  <p>नुक़्ते या निचली बिंदी का चिह्न (़) क़, ख़, ग़, फ़, ज़, ड़, और ढ़ के लिए प्रयुक्त होगा.</p>
-  <p>पहेली हर रोज़ बदलती है.</p>
+  <p class="square good"></p> ठीक अक्षर, ठीक जगह पर<br/>
+  <div class="square bad"></div> अक्षर नाम में नहीं<br>
+  <div class="square okay"></div> अक्षर मौजूद, पर किसी और जगह
+  <p>नुक़्ते या निचली बिंदी का चिह्न (़) क़, ख़, ग़, ज़, फ़, ड़, और ढ़ के लिए इस्तेमाल होगा.</p>
+  <p>पहेली हर रोज़ GMT मध्यरात्रि (भारत में सुबह 5:30) पर बदलती है.</p>
 </details>
 
 <table id="grid">
@@ -497,15 +552,15 @@ a:hover.button {
 <details closed id="lastword" name="Last Word">
   <summary>कल का फ़िल्मी नाम था</summary>
   <p>
-    <span id="lastword_value"></span>
+    <b><span id="lastword_value"></span></b>
   </p>
 </details>
-<footer>'फ़िल्मी' is inspired by <a
-href="https://nytimes.com/wordle">Wordle</a> and borrows the base code from <a href="https://kach.github.io/shabdle/">Shabdle</a>. The <a href="https://github.com/kach/shabdle">source
-code</a> for 'फ़िल्मी (FillMe)' is licensed under GPLv2.</footer>
+<footer>'फ़िल्मी (FillMe)' is inspired by Josh Wardle's <a
+href="https://nytimes.com/wordle">Wordle</a> and one of its Hindi adaptations <a href="https://kach.github.io/shabdle/">Shabdle</a>. FillMe's source
+code is licensed under GPLv2. June 2022 || <a href="https://giitaayan.com">गीतायन</a> | <a href="https://giitaayan.com/x.htm">हाइट्रांस</a> | <a href="https://awards.giitaayan.com">RMIM Puraskaar</a></footer>
 
 <script>
-  function CopyToClipboard(id) {
+  async function CopyToClipboard(id) {
     var r = document.createRange();
     r.selectNode(document.getElementById(id));
     window.getSelection().removeAllRanges();
@@ -514,6 +569,8 @@ code</a> for 'फ़िल्मी (FillMe)' is licensed under GPLv2.</footer>
     window.getSelection().removeAllRanges();
     document.getElementById('result-text').style.backgroundColor = '#ffeeee';
     document.getElementById('result-text').style.color = '#a73939';
+    document.getElementById('share').className = 'chamako';
+    await wait(800);
     document.getElementById('copy-button').style.backgroundColor = '#fff';
     document.getElementById('copy-button').style.color = '#900';
     document.getElementById('copy-button').textContent = 'Copied to Clipboard!';
