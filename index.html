@@ -2,6 +2,19 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="fillme-icon.png" />
+<link rel="apple-touch-icon" href="fillme-iphone.png">
+<link rel="icon" href="fillme-icon.png">
+<meta name="apple-mobile-web-app-title" content="FillMe">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta property="og:title" content="FillMe - फ़िल्मी">
+<meta property="og:description" content="FillMe is your daily फ़िल्मी wordle fix.">
+<meta property="og:image" content="">
+<meta property="og:url" content="https://www.giitaayan.com/fillme">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FillMe - फ़िल्मी">
+<meta name="twitter:card" content="summary_large_image">
+
 <head>
 <title>FillMe: फ़िल्मी वर्डल</title>
 
@@ -208,6 +221,7 @@ a:hover.button {
 }
 .jeet {
   animation: flashWin 1s ease-in-out;
+  animation-delay: 1s;
 }
 
 @keyframes chamak {
@@ -420,8 +434,8 @@ a:hover.button {
     var time_taken = end_time - start_time;
     var time_taken_str = '';
     todays_clue = [];
-    if (time_taken < 60000) {
-      time_taken_str = 'Less than a minute';
+    if (time_taken < 20000) {
+      time_taken_str = 'Instantaneous!';
     }
     else if (time_taken < 120000) {
       time_taken_str = parseInt(time_taken / 1000).toString() + ' seconds';
@@ -442,10 +456,10 @@ a:hover.button {
     if (rows.length == 1) {
       out += "💯 Whoa! Solved in <b>first try</b>! ";
     } else {
-      out +=  "👍🏽 Solved in <b>" + (rows.length).toString() + " attempts</b>! "
+      out += "👍🏽 Solved in <b>" + (rows.length).toString() + " attempts</b>! "
     };
-    out += "🕓 Time taken: <b>" + time_taken_str + "</b>\<br\>";
-    out += "\<br\>Play at https://giitaayan.com/fillme \<\/p\>";
+    out += "🕓 <b>" + time_taken_str + "</b><br>";
+    out += "<br>Play at https://giitaayan.com/fillme </p>";
    
     var share = document.getElementById('share');
     share.innerHTML = out;
@@ -465,7 +479,7 @@ a:hover.button {
   window.addEventListener('load', function() {
     make_keyboard();
     var puzzles = {
-      '2022-7-28': 'महल','2022-7-29': 'उड़ान','2022-7-30': 'क़ानून','2022-7-31': 'अनिल','2022-8-1': 'न्यूटन','2022-8-2': 'ज़ीनत','2022-8-3': 'सुजाता','2022-8-4': 'सर','2022-8-5': 'नसीब','2022-8-6': 'कोशिश','2022-8-7': 'दंगल','2022-8-8': 'महबूब','2022-8-9': 'आक्रोश','2022-8-10': 'अशोक','2022-8-11': 'अभिमान','2022-8-12': 'सुलक्षणा','2022-8-13': 'सत्या','2022-8-14': 'मासूम','2022-8-15': 'शांताराम','2022-8-16': 'मम्मो','2022-8-17': 'चेतन','2022-8-18': 'लाजवंती','2022-8-19': 'अंदाज़','2022-8-20': 'सारांश','2022-8-21': 'दिलीप','2022-8-22': 'आलिया','2022-8-23': 'घायल','2022-8-24': 'नसीर','2022-8-25': 'अनुपमा','2022-8-26': 'सदमा','2022-8-27': 'जागृति','2022-8-28': 'बलराज','2022-8-29': 'अर्जुन','2022-8-30': 'जयदेव','2022-8-31': 'अनुराधा'
+      '2022-8-22': 'आलिया','2022-8-23': 'घायल','2022-8-24': 'नसीर','2022-8-25': 'अनुपमा','2022-8-26': 'सदमा','2022-8-27': 'जागृति','2022-8-28': 'बलराज','2022-8-29': 'अर्जुन','2022-8-30': 'जयदेव','2022-8-31': 'अनुराधा','2022-9-1': 'आरती','2022-9-2': 'नमकहराम','2022-9-3': 'कथा','2022-9-4': 'मक़बूल','2022-9-5': 'ख़य्याम','2022-9-6': 'वास्तव','2022-9-7': 'शक्ति','2022-9-8': 'धनक','2022-9-9': 'परिचय','2022-9-10': 'सईद','2022-9-11': 'छबीली','2022-9-12': 'टॉम','2022-9-13': 'ज़बरदस्त','2022-9-14': 'फ़ैशन','2022-9-15': 'मधुमती','2022-9-16': 'शंघाई','2022-9-17': 'साधना','2022-9-18': 'संकल्प'
     };
     //todays_utc_date = '2022-6-15';
 
