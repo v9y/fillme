@@ -221,7 +221,7 @@ a:hover.button {
 }
 .jeet {
   animation: flashWin 1s ease-in-out;
-  animation-delay: 1s;
+  animation-delay: .6s;
 }
 
 @keyframes chamak {
@@ -479,7 +479,26 @@ a:hover.button {
   window.addEventListener('load', function() {
     make_keyboard();
     var puzzles = {
-      '2022-8-22': 'आलिया','2022-8-23': 'घायल','2022-8-24': 'नसीर','2022-8-25': 'अनुपमा','2022-8-26': 'सदमा','2022-8-27': 'जागृति','2022-8-28': 'बलराज','2022-8-29': 'अर्जुन','2022-8-30': 'जयदेव','2022-8-31': 'अनुराधा','2022-9-1': 'आरती','2022-9-2': 'नमकहराम','2022-9-3': 'कथा','2022-9-4': 'मक़बूल','2022-9-5': 'ख़य्याम','2022-9-6': 'वास्तव','2022-9-7': 'शक्ति','2022-9-8': 'धनक','2022-9-9': 'परिचय','2022-9-10': 'सईद','2022-9-11': 'छबीली','2022-9-12': 'टॉम','2022-9-13': 'ज़बरदस्त','2022-9-14': 'फ़ैशन','2022-9-15': 'मधुमती','2022-9-16': 'शंघाई','2022-9-17': 'साधना','2022-9-18': 'संकल्प'
+      '2023-4-25': 'अलबेला',
+      '2023-4-26': 'बदतमीज़',
+      '2023-4-27': 'फ़िरोज़',
+      '2023-4-28': 'झुमरू',
+      '2023-4-29': 'अग्निपथ',
+      '2023-4-30': 'महेश',
+      '2023-5-1': 'चितलकर',
+      '2023-5-2': 'मीर',
+      '2023-5-3': 'संगम',
+      '2023-5-4': 'परदेस',
+      '2023-5-5': 'बारादरी',
+      '2023-5-6': 'दामन',
+      '2023-5-7': 'सरस्वती',
+      '2023-5-8': 'अंकुर',
+      '2023-5-9': 'बावर्ची',
+      '2023-5-10': 'आज़माइश',
+      '2023-5-11': 'रवींद्र',
+      '2023-5-12': 'ग़बन',
+      '2023-5-13': 'आशीर्वाद',
+      '2023-5-14': 'सलीम'
     };
     //todays_utc_date = '2022-6-15';
 
@@ -572,7 +591,7 @@ a:hover.button {
 <footer>'फ़िल्मी (FillMe)' is inspired by Josh Wardle's <a
 href="https://nytimes.com/wordle">Wordle</a> and one of its Hindi adaptations <a href="https://kach.github.io/shabdle/">Shabdle</a>. FillMe's source
 code is licensed under GPLv2. June 2022 || <a href="https://giitaayan.com">गीतायन</a> | <a href="https://giitaayan.com/x.htm">हाइट्रांस</a> | <a href="https://awards.giitaayan.com">RMIM Puraskaar</a></footer>
-
+<script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
 <script>
   async function CopyToClipboard(id) {
     var r = document.createRange();
@@ -589,6 +608,10 @@ code is licensed under GPLv2. June 2022 || <a href="https://giitaayan.com">ग�
     document.getElementById('copy-button').style.color = '#900';
     document.getElementById('copy-button').textContent = 'Copied to Clipboard!';
   }
+  document.querySelector("#share-area").addEventListener("click", function (e) {
+    e.preventDefault();
+    party.confetti(e);
+  });
 </script>
 </body>
 </html>
