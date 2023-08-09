@@ -1,0 +1,227 @@
+body {
+  width: 100%;
+  max-width: 35em;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  font-family: 'Anek Devanagari', sans-serif;
+  color: black;
+  background: white;
+  box-sizing: border-box;
+  animation: fadeInAnimation ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeInAnimation {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+h1 {
+  text-align: center;
+  line-height: .8em;
+  padding-top: 0.5em;
+}
+
+td {
+  width: 2em;
+  height: 2em;
+  text-align: center;
+  background: white;
+  border: 1px solid black;
+  transition: all .2s ease-in;
+}
+td[data-guess]:not([data-guess=""]) {
+  background: #ddd;
+}
+.good {
+  background: #799a68 !important;
+  color: white;
+  border: none;
+}
+.bad {
+  background: #f46666 !important;
+  color: white;
+  border: none;
+}
+.okay {
+  background: #c18a22 !important;
+  color: white;
+  border: none;
+}
+.invalid {
+  display: none;
+  /* background: black !important;
+  color: white;
+  border: none; */
+}
+table {
+  font-size: 1.5em;
+  font-family: 'Anek Devanagari';
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1em;
+}
+
+#keyboard {
+  font-family: 'Anek Devanagari';
+  text-align: center;
+  user-select: none;
+  -webkit-user-select:none;
+  font-size: 1.2em;
+}
+#keyboard span {
+  display: inline-block;
+  width: 2em;
+  text-align: center;
+  margin: 0.1em;
+  padding-top: 0.2em;
+  padding-bottom: 0.1em;
+  background: #e8e8e3;
+  cursor: pointer;
+  border-radius: 0.3em;
+}
+#keyboard span#delete {
+  width: 8em;
+}
+#keyboard span:hover {
+  background: #333;
+  color: white;
+}
+#keyboard span.good {
+  background: #799a68;
+  color: white;
+}
+#keyboard span.bad {
+  background: #f46666;
+  color: white;
+}
+#keyboard span.okay {
+  background: #c18a22;
+  color: white;
+}
+
+#share-area {
+  margin-bottom:  1em;
+  color: #666;
+  border-radius: 3px;
+}
+
+#bars div {
+  background: lightgray;
+  overflow: visible;
+  white-space: nowrap;
+  padding:  0.2em;
+  font-size: 0.8em;
+}
+
+header {
+  color: #f46666;
+}
+h2 {
+  text-align: right;
+}
+footer {
+  margin-top: 1.5em;
+  font-size: 0.8em;
+  background: #eeeeee85;
+  padding:  0.8em 1em;
+  border-radius: 3px;
+}
+
+details {
+  background: #fee;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+  border-radius: 3px;
+  font-size: .95em;
+}
+details > summary {
+  cursor: pointer;
+  font-weight: normal;
+  font-size: 1em;
+}
+details p {
+  color: #555;
+  margin-bottom: 0;
+}
+details[open] > summary {
+  font-weight: normal;
+}
+
+.language-css {
+    color: #32651a;
+    background: #e1e9dd;
+    padding: 0.8em;
+    line-height: 1.1em;
+    font-size: .95em;
+}
+
+a.button {
+    font-family: system-ui,helvetica,arial,sans-serif;
+    font-size: .9em;
+    font-weight: bold;
+    line-height: 1;
+    display: inline-block;
+    padding: .5em;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #900;
+    border-radius: 5px;
+    background-color: #900;
+    cursor: pointer;
+    transition: all .2s ease-in;
+}
+a:hover.button {
+    color: #900;
+    background-color: #fff;
+    border: 1px solid #900;
+}
+
+@keyframes nudge {  
+  0% {transform: rotate(-7deg);}
+  33% {transform: rotate(7deg);}
+  66% {transform: rotate(-7deg);}
+}
+.galat-hai {
+    animation: nudge .4s linear;
+}
+
+@keyframes flashWin {
+  0% {opacity: 1; background-color: #32651a;}
+  50% {opacity: 0;background-color: #ddd;}
+  100% {opacity: 1;background-color: #799a68;}
+}
+.jeet {
+  animation: flashWin 1s ease-in-out;
+  animation-delay: .6s;
+}
+
+@keyframes chamak {
+    0%, 100% { opacity: 1;}
+    50% { opacity: .1;}         
+}
+.chamako {
+    animation: chamak 1s ease-in-out;
+}
+
+@keyframes kaanp {  
+    0%, 64%, 100%   { transform: scale(1,1)  translateY(0); }
+    10%, 50%  { transform: scale(1.1,.9) translateY(0); }
+    30%  { transform: scale(.9,1.1) translateY(-5px); }
+    57%  { transform: scale(1,1) translateY(-2px); }
+  }  
+.share-karo {
+      animation: kaanp .5s ease-in;
+      animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
+}
+
+.square {
+  height: 14px;
+  width: 14px;
+  display: inline-block;
+}  
