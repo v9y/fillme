@@ -253,7 +253,8 @@ window.addEventListener('load', async function() {
     
     // Fetch namelist 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://v9y.github.io/fillme/films.txt");
+    xhr.open("GET", "films.txt");
+    // xhr.open("GET", "https://v9y.github.io/fillme/films.txt");
     xhr.onload = function (x) {
       // Split the namelist into an array and store in wl
       wl = this.responseText.split("\n");
